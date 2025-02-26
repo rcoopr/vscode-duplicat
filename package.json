@@ -101,14 +101,20 @@
                 "description": "Identifier from https://code.visualstudio.com/api/references/icons-in-labels#icon-listing"
               }
             },
-            "required": ["label", "matches", "replacement"]
+            "required": [
+              "label",
+              "matches",
+              "replacement"
+            ]
           },
-          "default": [{
-            "label": "Create test file",
-            "matches": "^(?!.*(test|spec)).*$",
-            "replacement": "${basename}.spec.${ext}",
-            "icon": "disassembly-editor-label-icon"
-          }]
+          "default": [
+            {
+              "label": "Create test file",
+              "matches": "^(?!.*(test|spec)).*$",
+              "replacement": "${basename}.spec.${ext}",
+              "icon": "disassembly-editor-label-icon"
+            }
+          ]
         }
       }
     }
@@ -130,7 +136,7 @@
     "@antfu/eslint-config": "^2.27.3",
     "@antfu/ni": "^0.22.4",
     "@types/node": "^22.13.4",
-    "@types/vscode": "^1.97.0",
+    "@types/vscode": "^1.92.0",
     "@vscode/vsce": "^2.32.0",
     "bumpp": "^9.11.1",
     "eslint": "^9.20.1",
