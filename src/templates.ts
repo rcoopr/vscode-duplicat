@@ -1,10 +1,5 @@
-import type { ParsedPath } from 'node:path'
-import { join, parse } from 'node:path'
-import type { QuickPickItem } from 'vscode'
-import { window } from 'vscode'
 import type { config } from './config'
 import { logger } from './utils'
-import type { UriDetail, UriDetailWithReplacement } from './types'
 
 type TemplateConfig = typeof config['templates'][number]
 
