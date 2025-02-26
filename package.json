@@ -34,14 +34,82 @@
     "onStartupFinished"
   ],
   "contributes": {
-    "commands": [],
+    "menus": {
+      "explorer/context": [
+        {
+          "when": "resourceScheme == 'file'",
+          "command": "duplicat.duplicate",
+          "group": "5_cutcopypaste@99"
+        },
+        {
+          "when": "resourceScheme == 'file'",
+          "command": "duplicat.quickDuplicate",
+          "group": "5_cutcopypaste@99"
+        }
+      ],
+      "editor/title/context": [
+        {
+          "when": "resourceScheme == 'file'",
+          "command": "duplicat.duplicate",
+          "group": "5_cutcopypaste@99"
+        },
+        {
+          "when": "resourceScheme == 'file'",
+          "command": "duplicat.quickDuplicate",
+          "group": "5_cutcopypaste@99"
+        }
+      ]
+    },
+    "commands": [{
+      "title": "Duplicate",
+      "command": "duplicat.duplicate"
+    }, {
+      "title": "Quick Duplicate",
+      "command": "duplicat.quickDuplicate"
+    }],
     "configuration": {
       "type": "object",
       "properties": {
+        "duplicat.notifySuccess": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show a notification on successful duplication"
+        },
         "duplicat.openDuplicatedFile": {
           "type": "boolean",
           "default": true,
           "description": "Open the duplicated file after duplication"
+        },
+        "duplicat.templates": {
+          "type": "array",
+          "markdownDescription": "**Replacement** may contain several special tokens:\n - ${basename}: Matches the file's basename, e.g. file in file.ts\n - ${ext}: Matches the parent file's extension, the ts in file.ts",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "matches": {
+                "type": "string",
+                "description": "Regex which the file / folder name (including extension) is matched against"
+              },
+              "replacement": {
+                "type": "string",
+                "description": "Replacement format for matched names"
+              },
+              "icon": {
+                "type": "string",
+                "description": "Identifier from https://code.visualstudio.com/api/references/icons-in-labels#icon-listing"
+              }
+            },
+            "required": ["label", "matches", "replacement"]
+          },
+          "default": [{
+            "label": "Create test file",
+            "matches": "^(?!.*(test|spec)).*$",
+            "replacement": "${basename}.spec.${ext}",
+            "icon": "disassembly-editor-label-icon"
+          }]
         }
       }
     }
