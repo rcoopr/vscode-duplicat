@@ -2,7 +2,7 @@
   "publisher": "rcoopr",
   "name": "duplicat",
   "displayName": "DupliCat",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "packageManager": "pnpm@9.7.1",
   "description": "Duplicate files with ease",
   "author": "Ross Cooper",
