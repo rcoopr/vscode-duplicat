@@ -34,7 +34,8 @@ export const { activate, deactivate } = defineExtension(() => {
       const urisToDuplicate = await gatherUrisToDuplicate(selectedUri, allSelectecUris) || []
       const uriDetailsWithReplacements = urisToDuplicate.map((uri) => {
         const template = getQuickpickItems(uri, templates.value, 'first')
-        const replacedPath = template ? getReplacedPath(uri, templates.value, template) : undefined
+        logger.info('Template:', JSON.stringify(template, null, 2))
+        const replacedPath = getReplacedPath(uri, templates.value, template)
         return replacedPath ? { ...uri, replacedPath } : undefined
       }).filter(v => !!v)
       await executeDuplications(uriDetailsWithReplacements)

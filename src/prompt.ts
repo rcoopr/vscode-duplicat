@@ -23,7 +23,7 @@ export function getQuickpickItems(uri: UriDetail, templates: Template[], matchTy
 export function getQuickpickItems(uri: UriDetail, templates: Template[], matchType: 'first' | 'all'): QuickPickItem | QuickPickItem[] | undefined {
   const findMatch = (template: Template) => {
     const match = uri.path.base.match(template.regex)
-    logger.info('Match:', JSON.stringify(match, null, 2), uri.path, 'tested on', template.regex, '\n\n', JSON.stringify({ template }, null, 2))
+    logger.info('Match:', JSON.stringify(match, null, 2), JSON.stringify(uri.path), 'tested on', template.regex, '\n\n', JSON.stringify({ template }, null, 2))
     return match
   }
 
@@ -44,11 +44,11 @@ export function getQuickpickItems(uri: UriDetail, templates: Template[], matchTy
   const items = templates.filter(findMatch).map(createQuickPickItem)
   if (items.length) {
     items.push({ kind: QuickPickItemKind.Separator, label: '' })
-    items.push({
-      label: 'Custom filename',
-      alwaysShow: true,
-    })
   }
+  items.push({
+    label: 'Custom filename',
+    alwaysShow: true,
+  })
 
   return items
 }
@@ -115,19 +115,18 @@ export async function promptFilenames(
 export function getReplacedPath(
   detail: UriDetail,
   templates: Template[],
-  quickpickItem: QuickPickItem,
+  quickpickItem?: QuickPickItem,
   quickpickValue = '',
 ): ParsedPath | undefined {
   logger.info('Selected quickpick item: ', JSON.stringify(quickpickItem))
 
   if (!quickpickItem) {
-    const error = 'No option selected, maybe your config is wrong? Check the logs for more info'
-    window.showErrorMessage(error)
-    return
+    const newBase = detail.path.base.replace(detail.path.name, `${detail.path.name}-copy`)
+    return parse(join(detail.path.dir, newBase))
   }
 
   if (quickpickItem.label === 'Custom filename') {
-    const newFilename = quickpickValue.includes('.') ? quickpickValue : detail.stats.isDirectory() ? quickpickValue : `${quickpickValue}.${detail.path.ext}`
+    const newFilename = quickpickValue.includes('.') ? quickpickValue : detail.stats.isDirectory() ? quickpickValue : `${quickpickValue}${detail.path.ext}`
     return parse(join(detail.path.dir, newFilename))
   }
   else {

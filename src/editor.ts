@@ -8,7 +8,7 @@ import type { UriDetail } from './types'
 export async function gatherUrisToDuplicate(selectedUri?: Uri, allSelectecUris?: Uri[]): Promise<UriDetail[] | undefined> {
   const editor = useActiveTextEditor()
   const uris: Uri[] = allSelectecUris || [selectedUri || editor.value?.document.uri].filter(uri => uri instanceof Uri)
-  logger.info(`Duplicate ${(uris.length)} files:`, uris.map(uri => uri.toJSON()).join('\n'))
+  logger.info(`Duplicate ${(uris.length)} files:`, uris.map(uri => JSON.stringify(uri.path)).join('\n'))
 
   if (!uris.length) {
     window.showErrorMessage('Nothing selected to duplicate')
